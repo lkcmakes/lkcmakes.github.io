@@ -1,0 +1,16 @@
+/* Light mode background */
+body {
+  background-color: #ffeecc !important;  /* Light peach/yellow */
+}
+
+/* Dark mode background */
+html.dark body {
+  background-color: #000000 !important;  /* Very dark gray */
+}
+
+/* Default selection */
+::selection {
+  background: #8a5df7; /* or your preferred light mode color */
+  color: #000000;
+}
+

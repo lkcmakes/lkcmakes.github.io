@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on LKC</title>
+    <link>//localhost:1313/categories/</link>
+    <description>Recent content in Categories on LKC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© 2025 LKC</copyright>
+    <lastBuildDate>Sat, 26 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Labs</title>
+      <link>//localhost:1313/categories/labs/</link>
+      <pubDate>Sat, 26 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/categories/labs/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>LetsDefend</title>
+      <link>//localhost:1313/categories/letsdefend/</link>
+      <pubDate>Sat, 26 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/categories/letsdefend/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>SOC Labs</title>
+      <link>//localhost:1313/categories/soc-labs/</link>
+      <pubDate>Sat, 26 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/categories/soc-labs/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Securing Windows</title>
+      <link>//localhost:1313/categories/securing-windows/</link>
+      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/categories/securing-windows/</guid>
+      <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>

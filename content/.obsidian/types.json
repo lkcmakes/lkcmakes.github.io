@@ -1,0 +1,10 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "categories": "multitext",
+    "showZenMode": "checkbox",
+    "zen": "checkbox"
+  }
+}
