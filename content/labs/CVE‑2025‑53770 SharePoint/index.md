@@ -16,7 +16,8 @@ categories:
 ## What is the vulnerability?
 
 **CVE‑2025‑53770 | SharePoint vulnerability**
-<br>Affects on-prem instances (2016, 2019, Subscription editions). It bypasses authentication to facilitate the following: upload files, execute a web shell, and steal the machineKey. It works by exploiting ToolPane.aspx via a spoofed referrer header (SignOut.aspx).
+<br>The vulnerability affects on-prem instances (2016, 2019, Subscription editions). It bypasses authentication by sending a header request to *ToolPane.aspx*, where the referrer is set to *SignOut.aspx*. Post-exploitation involves writing a payload to *spinstall0.aspx* which extracts cryptographic key material.
+
 ## What is the alert?
 
 ![alert.png](images/alert.png)
@@ -34,7 +35,7 @@ It looks like the exploitation has been successful. We can see an unauthenticate
 ## Summary
 We have a true positive exploit of CVE‑2025‑53770. The adversary has successfully exploited the vulnerability and post-exploitation phase is evident. 
 
-w3wp.exe was used to spawn an encoded powershell script. This script facilitated the extract of the ASP.NET MachineKey. LOTL was observed, with csc.exe being used to compile a malicious *payload.exe*. A malicious page *spinstall0.aspx* was created which redirects users to the adversary's *payload.exe*
+w3wp.exe was used to spawn an encoded powershell script. This script facilitates the extract of the ASP.NET MachineKey. LOTL was observed, with csc.exe being used to compile a malicious *payload.exe*. A SharePoint page *spinstall0.aspx* was created which loads the malicious payload.
 
 ## Analysing the endpoint
 ![endpoint.png](images/endpoint.png)
@@ -44,6 +45,10 @@ w3wp.exe was used to spawn an encoded powershell script. This script facilitated
 
 
 ## Timeline
+
+The adversary begins by sending a crafted unauthenticated payload *(Code 1)* via POST. The server executes the payload via powershell, triggered by w3wp.exe (IIS process).
+
+**Processes**
 
 | Time     | Process        | Overview                                               | Child Process  |
 | -------- | -------------- | ------------------------------------------------------ | -------------- |
@@ -56,8 +61,6 @@ w3wp.exe was used to spawn an encoded powershell script. This script facilitated
 ### Terminal History
 ![terminal.png](images/terminal.png)
 
-There is a bit to unpack here lets start with item 1.
-
 #### Code 1
 Flags: 
 `-nop, -w hidden, -e`
@@ -68,7 +71,7 @@ Flags:
 After decoding the Base64 commands we get:
 ![decoded.png](images/decoded.png)
 
-It looks like we are looking at an exfiltration script.
+On page load, the script is set to execute.
 
 We can gather the following:
 ```
@@ -77,7 +80,7 @@ We can gather the following:
 script runat="server" language="c#"
 ```
 
-- Server side C# execution
+- C# execution
 - ASP.NET 
 
 ``` 
@@ -106,7 +109,7 @@ Response.Write(cg.ValidationKey+"|"+cg.Validation+"|"+cg.DecryptionKey+"|"+cg.De
 
 - Run command via cmd
 - Drop redirector page spinstall0.aspx to SharePoint Layouts directory
-- This triggers a redirect to download payload.exe from adversary's infrastructure
+- This triggers a redirect to download payload.exe from the adversary's infrastructure
 
 #### Code 4
 ```
