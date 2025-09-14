@@ -1,24 +1,20 @@
 {
   "main": {
-    "id": "c00127c1373017f5",
+    "id": "02c09b6c98d22d47",
     "type": "split",
     "children": [
       {
-        "id": "d15a114066eb885e",
+        "id": "32dc08e29a5d51e2",
         "type": "tabs",
         "children": [
           {
-            "id": "6445aa119509c58c",
+            "id": "4533fda328f7fb64",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "labs/CVE‑2025‑53770 SharePoint/index.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "index"
+              "title": "New tab"
             }
           }
         ]
@@ -27,15 +23,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "e7a5f25ce0376b79",
+    "id": "72083c56338dcfed",
     "type": "split",
     "children": [
       {
-        "id": "d68e8a9b4bc9e6e9",
+        "id": "623d22e86977cc74",
         "type": "tabs",
         "children": [
           {
-            "id": "38dc4b22c4848275",
+            "id": "8ae8da635106453f",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +44,7 @@
             }
           },
           {
-            "id": "0d8aa0da6673e6be",
+            "id": "7eaaf2570f7b3a5c",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +61,7 @@
             }
           },
           {
-            "id": "f49794b5541165ce",
+            "id": "92ab08d26b4282ac",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -81,20 +77,19 @@
     "width": 300
   },
   "right": {
-    "id": "e586366cfc398a73",
+    "id": "e8f337cb75689ea5",
     "type": "split",
     "children": [
       {
-        "id": "3dc94bd3c88e5c7f",
+        "id": "56ac2925fa675d41",
         "type": "tabs",
         "children": [
           {
-            "id": "4289e4a4b986544e",
+            "id": "9c6b58efbabeadcf",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "posts/Implementing BitLocker/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,25 +99,24 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for index"
+              "title": "Backlinks"
             }
           },
           {
-            "id": "be2c47ea9ba2b3cf",
+            "id": "312e046b6e6581f5",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "posts/Implementing BitLocker/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from index"
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "986b7b1e9233bff3",
+            "id": "8f0266942be6fc63",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,18 +131,17 @@
             }
           },
           {
-            "id": "afb89a6210b234f6",
+            "id": "c51bad5fb6f20e67",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "posts/Implementing BitLocker/index.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of index"
+              "title": "Outline"
             }
           }
         ]
@@ -165,31 +158,16 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
     }
   },
-  "active": "6445aa119509c58c",
+  "active": "4533fda328f7fb64",
   "lastOpenFiles": [
-    "posts/Implementing BitLocker/index.md",
-    "posts/Implementing BitLocker/featured.jpg",
-    "labs/CVE‑2025‑53770 SharePoint/index.md",
-    "labs/CVE‑2025‑53770 SharePoint/featured.jpg",
-    "labs/Lab 1/images",
-    "labs/Lab 1",
-    "labs/CVE‑2025‑53770 SharePoint/images/terminal.png",
     "labs/_index.md",
-    "labs/CVE‑2025‑53770 SharePoint/images/endpoint.png",
-    "labs/CVE‑2025‑53770 SharePoint/images/decoded.png",
-    "labs/CVE‑2025‑53770 SharePoint/images/alert.png",
-    "labs/CVE‑2025‑53770 SharePoint/images/ipinfo.png",
-    "Pasted image 20250726194854.png",
-    "Pasted image 20250726194500.png",
-    "Pasted image 20250726194522.png",
-    "labs/CVE‑2025‑53770 SharePoint/images",
     "posts/_index.md",
-    "labs/CVE‑2025‑53770 SharePoint",
     "_index.md",
-    "labs",
-    "posts/blog1/Unconfirmed 373453.crdownload"
+    "labs/CVE‑2025‑53770 SharePoint/index.md",
+    "labs/CVE‑2025‑53770 SharePoint/featured.jpg"
   ]
 }
