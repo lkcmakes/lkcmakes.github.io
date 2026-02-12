@@ -6,8 +6,28 @@
     <description>Recent content in Categories on LKC</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>© 2025 LKC</copyright>
-    <lastBuildDate>Sat, 26 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>© 2026 LKC</copyright>
+    <lastBuildDate>Thu, 12 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>AD Hardening</title>
+      <link>//localhost:1313/categories/ad-hardening/</link>
+      <pubDate>Thu, 12 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/categories/ad-hardening/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Guidance</title>
+      <link>//localhost:1313/categories/guidance/</link>
+      <pubDate>Thu, 12 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/categories/guidance/</guid>
+      <description></description>
+      
+    </item>
     
     <item>
       <title>Labs</title>
@@ -20,21 +40,11 @@
     </item>
     
     <item>
-      <title>LetsDefend</title>
-      <link>//localhost:1313/categories/letsdefend/</link>
+      <title>Vulnerabilities</title>
+      <link>//localhost:1313/categories/vulnerabilities/</link>
       <pubDate>Sat, 26 Jul 2025 00:00:00 +0000</pubDate>
       
-      <guid>//localhost:1313/categories/letsdefend/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>SOC Labs</title>
-      <link>//localhost:1313/categories/soc-labs/</link>
-      <pubDate>Sat, 26 Jul 2025 00:00:00 +0000</pubDate>
-      
-      <guid>//localhost:1313/categories/soc-labs/</guid>
+      <guid>//localhost:1313/categories/vulnerabilities/</guid>
       <description></description>
       
     </item>

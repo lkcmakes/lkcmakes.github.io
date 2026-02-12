@@ -14,3 +14,23 @@ html.dark body {
   color: #000000;
 }
 
+/* Increase the default font size */
+html {
+  font-size: 20px;
+}
+
+/* Dark mode: body text only */
+html.dark body {
+  color: #ffffff !important;
+}
+
+/* Dark mode: body text inside prose */
+html.dark .prose {
+  color: #ffffff !important;
+}
+
+
+.prose {
+  max-width: 80ch;        /* tighter reading measure */
+  margin-inline: auto;   /* center it */
+}

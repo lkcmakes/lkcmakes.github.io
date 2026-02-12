@@ -11,13 +11,28 @@
             "id": "4533fda328f7fb64",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.10.3"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.10.3"
+            }
+          },
+          {
+            "id": "e1175a988dfe2192",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.11.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.11.7"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -162,7 +177,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "4533fda328f7fb64",
+  "active": "e1175a988dfe2192",
   "lastOpenFiles": [
     "labs/_index.md",
     "posts/_index.md",

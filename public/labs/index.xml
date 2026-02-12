@@ -6,8 +6,18 @@
     <description>Recent content in Labs on LKC</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>© 2025 LKC</copyright>
-    <lastBuildDate>Sat, 26 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/labs/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>© 2026 LKC</copyright>
+    <lastBuildDate>Wed, 11 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/labs/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Implementing a tiered AD</title>
+      <link>//localhost:1313/labs/implement-a-tiered-ad-model/</link>
+      <pubDate>Wed, 11 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/labs/implement-a-tiered-ad-model/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="//localhost:1313/labs/implement-a-tiered-ad-model/featured.jpg" />
+    </item>
     
     <item>
       <title>CVE‑2025‑53770 SharePoint</title>

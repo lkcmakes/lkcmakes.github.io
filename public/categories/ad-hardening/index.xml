@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AD Hardening on LKC</title>
+    <link>//localhost:1313/categories/ad-hardening/</link>
+    <description>Recent content in AD Hardening on LKC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© 2026 LKC</copyright>
+    <lastBuildDate>Thu, 12 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/categories/ad-hardening/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Implementing a tiered AD</title>
+      <link>//localhost:1313/posts/implement-a-tiered-ad-model/</link>
+      <pubDate>Thu, 12 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/posts/implement-a-tiered-ad-model/</guid>
+      <description>How to implement a tiered AD model</description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="//localhost:1313/posts/implement-a-tiered-ad-model/featured.jpg" />
+    </item>
+    
+  </channel>
+</rss>
