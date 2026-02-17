@@ -17,7 +17,12 @@ Running for the clouds.
 ## What is the vulnerability?
 
 **CVE‑2025‑53770 | SharePoint vulnerability**
-<br>The vulnerability affects on-prem instances (2016, 2019, Subscription editions). It bypasses authentication by sending a header request to *ToolPane.aspx*, where the referrer is set to *SignOut.aspx*. Post-exploitation involves writing a payload to *spinstall0.aspx* which extracts cryptographic key material.
+<br>
+The vulnerability affects on-premises SharePoint Server installations (2016, 2019, and Subscription Edition). It has been actively exploited in the wild and is considered one of the most critical SharePoint vulnerabilities of all time.
+
+It allows attackers to bypass authentication by sending a specially crafted HTTP request to the **ToolPane.aspx** endpoint with the `Referer` header set to SignOut.aspx (the logout page). SharePoint’s request handling logic incorrectly treats this as part of a trusted, authenticated flow. Thus allowing the attacker to reach functionality that should be restricted.
+
+In observed attacks, threat actors upload a malicious file **spinstall0.aspx** to the server and use it to extract cryptographic key material such as the ASP.NET machine keys. These keys can then be used to forge valid authentication tokens, enabling persistence even after patches are applied.
 
 ## What is the alert?
 
@@ -116,7 +121,7 @@ Response.Write(cg.ValidationKey+"|"+cg.Validation+"|"+cg.DecryptionKey+"|"+cg.De
 ```
 "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Command "[System.Web.Configuration.MachineKeySection]::GetApplicationConfig()"
 ```
-- Use Powershell to gather Machine Key
+- Use Powershell to gather the Machine Key
 
 
 

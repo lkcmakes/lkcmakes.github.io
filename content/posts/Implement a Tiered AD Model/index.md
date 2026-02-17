@@ -20,24 +20,25 @@ The tiered AD model is one that categorises assets based on criticality. Tiers a
 ## How?
 ### Segment Tiers
 #### Tier 0: 
-Tier 0 should consist of the most business critical and important assets. *SpectreOps* has a [guide](https://specterops.github.io/TierZeroTable/) to help identify what should go in tier 0. Common assets include:
+Tier 0 should consist of the most business critical and important assets. *SpectreOps* has a good starting [guide](https://specterops.github.io/TierZeroTable/) to help identify what should go in tier 0. Common assets include:
 - Domain Controllers
 - Domain Administrators
 #### Tier 1: 
 Tier 1 typically consists of less critical business resources, including:
 - Application servers
 - File servers
-- Application administrators
+- Server & application administrators
 #### Tier 2: 
 Tier 2 is where end-users and devices are placed. This includes:
 - Standard user accounts
-- Staff laptops
+- Workstations
+- Workstation admins (Local Admins / IT Support)
 ### Enforce Segregation of Tiers
 #### GPO:
-Configure the following location - *Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment*, and configure these settings:
+Configure the following location - *Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment*, and configure these settings (exercise testing and caution):
 
 > [!info]- GPO
-> - Deny access to this computer from the network
+> - Deny access to this computer from the network 
 > - Deny log on as a batch job
 > - Deny log on as a service
 > - Deny log on locally
@@ -45,6 +46,7 @@ Configure the following location - *Computer Configuration > Windows Settings > 
 
 ##### Tier 0 GPO:
 - Deny Tier 1 and 2 users
+![tier0.png](images/tier0.png "Tier 0")
 ##### Tier 1 GPO:
 - Deny Tier 0 and 2 users
 ![tier1.png](images/tier1.png "Tier 1")
@@ -65,11 +67,11 @@ When a user authenticates, Windows creates a logon session in Local Security Aut
 ### In action
 So back to our scenario, Ringo has local admin on his laptop and John has Domain Administrator. The attacker has already compromised the laptop and Ringo's account and has remote access. 
 
-**Step 1**. They use a free tool called *mimikatz* to dump the credential material in memory from LSASS.
-![alert.png](images/dump.png "Dumping the hash")
+**Step 1**. They use a free tool called *mimikatz* to dump the credential material of John's admin account in memory from LSASS.
+![dump.png](images/dump.png "Dumping the hash")
 
-**Step 2**.  Simply pass the NTLM hash, and voila, domain administrator privileges.
-![alert.png](images/winrm.png "Passing the hash")
+**Step 2**.  Using a exploit tool, successfully authenticate to the domain controller by passing the hash of John's admin account.
+![winrm.png](images/winrm.png "Passing the hash")
 
 
 
