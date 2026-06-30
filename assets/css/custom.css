@@ -1,13 +1,3 @@
-/* Light mode background */
-body {
-  background-color: #ffeecc !important;  /* Light peach/yellow */
-}
-
-/* Dark mode background */
-html.dark body {
-  background-color: #000000 !important;  /* Very dark gray */
-}
-
 /* Default selection */
 ::selection {
   background: #8a5df7; /* or your preferred light mode color */
@@ -18,6 +8,32 @@ html.dark body {
 html {
   font-size: 20px;
 }
+
+.prose {
+  max-width: 80ch;        /* tighter reading measure */
+  margin-inline: auto;   /* center it */
+}
+
+/* Light mode background */
+body {
+  background-color: #ffffff !important;  /* White */
+
+	}
+
+/* Light mode */
+html:not(.dark) body {
+  color: #000000 !important;
+}
+
+html:not(.dark) .prose {
+  color: #000000 !important;
+}
+
+/* Dark mode background */
+html.dark body {
+  background-color: #000000 !important;  /* Very dark gray */
+}
+
 
 /* Dark mode: body text only */
 html.dark body {
@@ -30,7 +46,3 @@ html.dark .prose {
 }
 
 
-.prose {
-  max-width: 80ch;        /* tighter reading measure */
-  margin-inline: auto;   /* center it */
-}
