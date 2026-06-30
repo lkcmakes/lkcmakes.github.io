@@ -60,7 +60,7 @@ When a user authenticates, Windows creates a logon session in Local Security Aut
 **Step 1**. They use a free tool called *mimikatz* to dump the credential material in memory from LSASS.
 ![alert.png](images/dump.png "Dumping the hash")
 
-**Step 2**.  The attacker passes the stolen NTLM hash to authenticate as the Domain Administrator without knowing the password, allowing them to authenticate as the Domain Administrator without knowing the password.
+**Step 2**.  The attacker passes the stolen NTLM hash to authenticate as the Domain Administrator without knowing the password.
 ![alert.png](images/winrm.png "Passing the hash")
 
 
