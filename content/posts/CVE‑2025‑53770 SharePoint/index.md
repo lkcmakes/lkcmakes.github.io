@@ -8,8 +8,7 @@ categories:
   - LetsDefend
   - SOC Labs
 ---
-![featured.jpg](labs/CVE‑2025‑53770%20SharePoint/featured.jpg)
-
+![featured.jpg](featured.jpg)
 # CVE‑2025‑53770
 *Source: [SANS](https://www.sans.org/blog/critical-sharepoint-zero-day-exploited-what-you-need-to-know-about-cve-2025-53770), [CISA](https://www.cisa.gov/news-events/alerts/2025/07/20/update-microsoft-releases-guidance-exploitation-sharepoint-vulnerabilities), [LOLBAS](https://lolbas-project.github.io/lolbas/Binaries/Csc/)*
 
