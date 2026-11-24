@@ -1,22 +1,25 @@
+/*
+  Blackened: monochrome scheme with a violet accent.
+  Blowfish uses these for both modes:
+    light mode -> background = neutral,     text = neutral-900
+    dark mode  -> background = neutral-800, text = neutral
+  so the page colours are set here, not overridden in custom.css.
+*/
 :root {
-  /* Black + white neutral base */
+  /* Neutral greys (white -> black) */
   --color-neutral: 255, 255, 255;
-  --color-neutral-50: 245, 245, 245;
-  --color-neutral-100: 230, 230, 230;
-  --color-neutral-200: 200, 200, 200;
-  --color-neutral-300: 170, 170, 170;
-  --color-neutral-400: 120, 120, 120;
-  --color-neutral-500: 80, 80, 80;
-  --color-neutral-600: 60, 60, 60;
-  --color-neutral-700: 40, 40, 40;
-  --color-neutral-800: 20, 20, 20;
-  --color-neutral-900: 0, 0, 0;
+  --color-neutral-50: 248, 248, 248;
+  --color-neutral-100: 238, 238, 238;
+  --color-neutral-200: 218, 218, 218;
+  --color-neutral-300: 188, 188, 188;
+  --color-neutral-400: 150, 150, 150;
+  --color-neutral-500: 112, 112, 112;
+  --color-neutral-600: 78, 78, 78;
+  --color-neutral-700: 38, 38, 38;  /* dark-mode code blocks, cards, borders */
+  --color-neutral-800: 8, 8, 8;     /* dark-mode page background */
+  --color-neutral-900: 12, 12, 12;  /* light-mode text */
 
-  /* Optional: also set base background and text */
-  --color-background: 255, 255, 255;
-  --color-text: 0, 0, 0;
-
-  /* Keep original violet + fuchsia accent colors */
+  /* Violet accent */
   --color-primary-50: 245, 243, 255;
   --color-primary-100: 237, 233, 254;
   --color-primary-200: 221, 214, 254;
@@ -28,6 +31,7 @@
   --color-primary-800: 91, 33, 182;
   --color-primary-900: 76, 29, 149;
 
+  /* Fuchsia secondary */
   --color-secondary-50: 253, 244, 255;
   --color-secondary-100: 250, 232, 255;
   --color-secondary-200: 245, 208, 254;

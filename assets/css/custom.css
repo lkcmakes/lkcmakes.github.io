@@ -1,48 +1,203 @@
-/* Default selection */
+/* Page colours come from assets/css/schemes/blackened.css; avoid !important overrides here. */
+
+:root {
+  /* Layout sizes are in px so they don't change if the base font size does. */
+  --lkc-measure: 620px;     /* reading column width: ~79 characters per line at 18px (ABC News: 614px, ~74) */
+  --lkc-side-min: 240px;    /* narrowest each side column may get (TOC lives in the right one) */
+  --lkc-gap: 50px;          /* space between the article and the side columns */
+  --lkc-page-pad: 8rem;     /* Blowfish's side padding on large screens (lg:px-32); kept in rem to match the theme */
+  --lkc-edge: 40px;         /* gap between the TOC and the page's right edge */
+
+  /* Article body text, matched to ABC News (18px text, 27px line spacing) */
+  --lkc-article-size: 18px;
+  --lkc-article-leading: 27px;
+}
+
 ::selection {
-  background: #8a5df7; /* or your preferred light mode color */
-  color: #000000;
+  background: rgb(var(--color-primary-500));
+  color: #fff;
 }
 
-/* Increase the default font size */
-html {
-  font-size: 20px;
+/* Article body text: ABC News size. Only the article itself; the rest of the site
+   (menus, dates, post summaries, lists) stays at the theme's normal size.
+   Headings inside the article scale from this (Tailwind Typography uses em). */
+.article-content {
+  font-size: var(--lkc-article-size);
+  line-height: var(--lkc-article-leading);
 }
 
-.prose {
-  max-width: 80ch;        /* tighter reading measure */
-  margin-inline: auto;   /* center it */
+/* Overall page width. Blowfish caps it at 80rem (max-w-7xl) = 1280px at the normal 16px root.
+   Keep the 1600px it had while the root was 20px, so there's room for the centred column + TOC. */
+body.max-w-7xl {
+  max-width: 1600px;
 }
 
-/* Light mode background */
-body {
-  background-color: #ffffff !important;  /* White */
-
-	}
-
-/* Light mode */
-html:not(.dark) body {
-  color: #000000 !important;
-}
-
+/* ---------- Light mode: black article text (theme default is dark grey 38,38,38) ---------- */
 html:not(.dark) .prose {
-  color: #000000 !important;
+  --tw-prose-body: rgb(var(--color-neutral-900));    /* 12,12,12 */
+  --tw-prose-bold: rgb(var(--color-neutral-900));
+  --tw-prose-quotes: rgb(var(--color-neutral-900));
+  --tw-prose-headings: rgb(var(--color-neutral-900));
 }
 
-/* Dark mode background */
-html.dark body {
-  background-color: #000000 !important;  /* Very dark gray */
+/* ---------- Dark mode: white article text (theme default is light grey) ---------- */
+.prose {
+  --tw-prose-invert-body: rgb(255 255 255);
+  --tw-prose-invert-headings: rgb(255 255 255);
+  --tw-prose-invert-bold: rgb(255 255 255);
+  --tw-prose-invert-quotes: rgb(255 255 255);
+  --tw-prose-invert-bullets: rgb(var(--color-neutral-400));
+  --tw-prose-invert-counters: rgb(var(--color-neutral-300));
 }
 
-
-/* Dark mode: body text only */
-html.dark body {
-  color: #ffffff !important;
+/* ---------- Article layout: centred reading column, TOC in the right margin ---------- */
+/* Small screens: one centred column; the TOC shows as a collapsible box above the text. */
+.lkc-article-header,
+.lkc-article-body,
+.lkc-article-footer {
+  max-width: var(--lkc-measure);
+  margin-inline: auto;
 }
 
-/* Dark mode: body text inside prose */
-html.dark .prose {
-  color: #ffffff !important;
+.article-content {
+  max-width: none;
 }
 
+/* 1024-1279px (small laptops): keep the single centred column and show the TOC as the
+   collapsible box above the article. Blowfish switches to its side-TOC at 1024px, so undo that here. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .lkc-toc .toc { position: static; }
+  .lkc-toc .toc-right { display: none; }
+  .lkc-toc .toc-inside { display: block; }
+  .lkc-toc .toc-inside summary { display: list-item; }
+}
 
+/* 1280px and up: three columns  [ side | article | side(TOC) ].
+   The side columns are always equal, so the article is truly centred.
+   The grid breaks out of Blowfish's 160px page padding so the TOC can sit near the right edge.
+   Header and footer use the same grid so the title lines up with the text. */
+@media (min-width: 1280px) {
+  .lkc-article-header,
+  .lkc-article-body,
+  .lkc-article-footer {
+    max-width: none;
+    display: grid;
+    grid-template-columns:
+      minmax(var(--lkc-side-min), 1fr)
+      minmax(0, var(--lkc-measure))
+      minmax(var(--lkc-side-min), 1fr);
+    column-gap: var(--lkc-gap);
+    margin-inline: calc(-1 * var(--lkc-page-pad));
+    padding-inline: var(--lkc-edge);
+  }
+
+  .lkc-article-header > *,
+  .lkc-article-footer > *,
+  .lkc-article-body > .lkc-main {
+    grid-column: 2;
+  }
+
+  .lkc-article-body > .lkc-main {
+    grid-row: 1;
+  }
+
+  .lkc-article-body > .lkc-toc {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;      /* TOC sits at the right edge of the page... */
+    width: max-content;     /* ...with its box hugging its links */
+    max-width: 280px;
+    font-size: 15px;
+  }
+}
+
+/* ---------- Posts page (and other lists): centred column, same width as articles ---------- */
+.lkc-list-col {
+  max-width: var(--lkc-measure);
+  margin-inline: auto;
+}
+
+/* Post rows: Blowfish ends each row with an always-empty 48px spacer (px-6) that squeezes the
+   title/summary next to the thumbnail. Hide it, and let the text take all the remaining width. */
+.article-link--simple > div:empty {
+  display: none;
+}
+.article-link--simple > div:not(.thumbnail) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ---------- Thumbnails: no drop shadow ---------- */
+.thumbnail-shadow {
+  box-shadow: none;
+}
+
+/* ---------- Code blocks: terminal window (green on black) ---------- */
+:root {
+  --lkc-term-bg: #0c0c0c;        /* terminal panel */
+  --lkc-term-bar: #262626;       /* title bar with the window dots */
+  --lkc-term-text: #5af78e;      /* terminal green */
+  --lkc-term-border: transparent;
+}
+/* Dark mode: the page is already near-black (8,8,8), so lift the panel a little
+   and give it a thin border so the "window" still stands out. */
+html.dark {
+  --lkc-term-bg: #141414;
+  --lkc-term-bar: #2a2a2a;
+  --lkc-term-border: #333333;
+}
+
+.article-content pre {
+  position: relative;
+  background: var(--lkc-term-bg);
+  color: var(--lkc-term-text);
+  border: 1px solid var(--lkc-term-border);
+  border-radius: 8px;
+  padding: 2.75em 1.25em 1.1em;   /* extra top padding makes room for the title bar */
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;          /* wrap long commands instead of hiding them behind a scrollbar */
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+}
+
+/* Title bar with red / yellow / green window dots */
+.article-content pre::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1.9em;
+  border-radius: 7px 7px 0 0;
+  background:
+    radial-gradient(circle, #ff5f56 0 5px, transparent 5.5px) 10px 50% / 14px 14px no-repeat,
+    radial-gradient(circle, #ffbd2e 0 5px, transparent 5.5px) 30px 50% / 14px 14px no-repeat,
+    radial-gradient(circle, #27c93f 0 5px, transparent 5.5px) 50px 50% / 14px 14px no-repeat,
+    var(--lkc-term-bar);
+}
+
+/* Everything inside the block is terminal green (overrides syntax-highlight colours) */
+.article-content pre code,
+.article-content pre code span {
+  color: var(--lkc-term-text);
+  background: transparent;
+  white-space: inherit;
+}
+.article-content pre .line {
+  display: block;
+}
+/* Blowfish sets min-width: max-content on highlighted code, which stops it ever wrapping */
+.article-content pre.chroma > code,
+.article-content pre > code {
+  min-width: 0;
+}
+
+/* ---------- Inline code (`like this` inside a sentence): matches the terminal blocks ---------- */
+/* Theme default was fuchsia text (--tw-prose-code = secondary colour) on a translucent grey pill. */
+.article-content :not(pre) > code {
+  color: var(--lkc-term-text);
+  background: var(--lkc-term-bg);
+  border: 1px solid var(--lkc-term-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-weight: 500;
+}

@@ -10,15 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
           fetch-depth: 0
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "latest"
+          # Pinned: "latest" could pull in a Hugo release the Blowfish theme doesn't support
+          # and break the site. 0.164.0 is the version the live site was last built with.
+          # Upgrade deliberately (change this number, push, check the Actions tab).
+          hugo-version: "0.164.0"
+          extended: true
 
       - name: Build
         run: hugo --minify
@@ -27,7 +31,7 @@ jobs:
         run: echo > public/.nojekyll
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

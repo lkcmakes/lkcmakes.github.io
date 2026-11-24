@@ -1,0 +1,18 @@
+# Hugo build output - GitHub Actions rebuilds the site on every push
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Editor / OS files
+.vs/
+.vscode/
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Obsidian: per-device window layout (changes every time you open the vault)
+content/.obsidian/workspace.json
+content/.obsidian/workspace-mobile.json
+
+# Personal changelog - kept on this PC only, not uploaded to GitHub
+CHANGELOG.txt
